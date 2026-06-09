@@ -161,38 +161,34 @@ class BaseScraper(ABC):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _doc_matches_keywords(doc, keywords: List[str]) -> bool:
-        haystack = " ".join([doc.text, doc.url, doc.filename]).lower()
-        return any(kw.lower() in haystack for kw in keywords)
-
-    @staticmethod
     def _filter_documents_by_keywords(record: ProcurementRecord, keywords: List[str]) -> None:
-        """Remove documents that don't match any keyword, unless the page title itself matches.
+        """Remove documents whose anchor text doesn't match any keyword.
 
-        When the page title matches (dedicated procurement page), all classified
-        documents are in scope. When only a document filename matched, restrict to
-        only those documents so unrelated PDFs from the same listing page are skipped.
+        Only human-readable text is checked (page title and link anchor text).
+        Filenames and URLs are intentionally excluded because they often contain
+        department codes (e.g. 'dxsuisinka01.pdf' = DX推進課's file, not DX content).
+
+        If the page title already matches, all classified documents are kept since
+        the whole page is a dedicated procurement record for that topic.
         """
         if not keywords:
             return
-        title_haystack = (record.title + " " + record.url).lower()
-        if any(kw.lower() in title_haystack for kw in keywords):
-            return  # dedicated page — keep all docs
+        title_lower = record.title.lower()
+        if any(kw.lower() in title_lower for kw in keywords):
+            return  # dedicated page — all docs in scope
         record.documents = [
             d for d in record.documents
-            if any(kw.lower() in (d.text + " " + d.url + " " + d.filename).lower()
-                   for kw in keywords)
+            if any(kw.lower() in d.text.lower() for kw in keywords)
         ]
 
     @staticmethod
     def _record_matches_keywords(record: ProcurementRecord, keywords: List[str]) -> bool:
-        """Return True if any keyword appears in the record title, URL, or any document."""
+        """Return True if any keyword appears in the page title or a document's anchor text."""
         if not keywords:
             return True
-        texts = [record.title, record.url]
+        haystack = record.title.lower()
         for doc in record.documents:
-            texts.extend([doc.text, doc.url, doc.filename])
-        haystack = " ".join(texts).lower()
+            haystack += " " + doc.text.lower()
         return any(kw.lower() in haystack for kw in keywords)
 
     @staticmethod
