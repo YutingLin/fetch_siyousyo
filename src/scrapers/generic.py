@@ -169,7 +169,7 @@ class GenericScraper(BaseScraper):
                 )
                 continue
 
-            soup = BeautifulSoup(resp.text, "lxml")
+            soup = BeautifulSoup(resp.text, "html.parser")
 
             # Collect candidate detail links
             for a in soup.find_all("a", href=True):
@@ -215,7 +215,7 @@ class GenericScraper(BaseScraper):
             logger.warning("[%s] Failed to fetch %s: %s", self.agency_name, url, exc)
             return None
 
-        soup = BeautifulSoup(resp.text, "lxml")
+        soup = BeautifulSoup(resp.text, "html.parser")
 
         # Title: try common selectors
         title = ""

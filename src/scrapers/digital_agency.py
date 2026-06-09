@@ -126,7 +126,7 @@ class DigitalAgencyScraper(BaseScraper):
                 logger.warning("Could not fetch listing page %s: %s", page_url, exc)
                 continue
 
-            soup = BeautifulSoup(resp.text, "lxml")
+            soup = BeautifulSoup(resp.text, "html.parser")
 
             # Collect procurement detail links
             for a in soup.find_all("a", href=True):
@@ -165,7 +165,7 @@ class DigitalAgencyScraper(BaseScraper):
             logger.warning("Failed to fetch %s: %s", url, exc)
             return None
 
-        soup = BeautifulSoup(resp.text, "lxml")
+        soup = BeautifulSoup(resp.text, "html.parser")
 
         # Extract title
         title = ""
