@@ -162,12 +162,16 @@ class BaseScraper(ABC):
 
     @staticmethod
     def _record_matches_keywords(record: ProcurementRecord, keywords: List[str]) -> bool:
-        """Return True if any keyword appears in the record title (case-insensitive)."""
+        """Return True if any keyword appears in the record title, URL, or any document."""
         if not keywords:
             return True
-        title_lower = record.title.lower()
+        # Build searchable text: title + page URL + all document filenames/link text
+        texts = [record.title, record.url]
+        for doc in record.documents:
+            texts.extend([doc.text, doc.url, doc.filename])
+        haystack = " ".join(texts).lower()
         for kw in keywords:
-            if kw.lower() in title_lower:
+            if kw.lower() in haystack:
                 return True
         return False
 

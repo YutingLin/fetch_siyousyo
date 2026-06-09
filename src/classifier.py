@@ -71,26 +71,24 @@ def classify_document(
     """
     # Combine all signals
     combined = " ".join(filter(None, [link_text, filename, context_text]))
+    combined_norm = _normalize(combined)
 
-    # Skip-list takes priority — these are explicitly unwanted document types
+    # Score each type first — positive matches take priority over skip-list
+    shiyousho_score = sum(
+        1 for kw in SHIYOUSHO_KEYWORDS if kw in combined_norm
+    )
+    teian_score = sum(
+        1 for kw in TEIANSHŌ_KEYWORDS if kw in combined_norm
+    )
+
+    if shiyousho_score > 0 or teian_score > 0:
+        return DocType.SHIYOUSHO if shiyousho_score >= teian_score else DocType.TEIAN
+
+    # No positive match — skip unwanted document types
     if _contains_any(combined, SKIP_KEYWORDS):
         return DocType.OTHER
 
-    # Score each type
-    shiyousho_score = sum(
-        1 for kw in SHIYOUSHO_KEYWORDS if kw in _normalize(combined)
-    )
-    teian_score = sum(
-        1 for kw in TEIANSHŌ_KEYWORDS if kw in _normalize(combined)
-    )
-
-    if shiyousho_score == 0 and teian_score == 0:
-        return DocType.OTHER
-
-    if shiyousho_score >= teian_score:
-        return DocType.SHIYOUSHO
-    else:
-        return DocType.TEIAN
+    return DocType.OTHER
 
 
 def extract_filename_from_url(url: str) -> str:
