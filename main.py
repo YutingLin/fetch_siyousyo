@@ -203,6 +203,13 @@ def cli():
     help="一覧表示のみ。PDF のダウンロードを行わない。",
 )
 @click.option(
+    "--max-downloads",
+    default=0,
+    show_default=True,
+    type=int,
+    help="ダウンロードする PDF の最大件数。0 は無制限。",
+)
+@click.option(
     "--verbose", "-v",
     is_flag=True,
     default=False,
@@ -217,6 +224,7 @@ def scrape_cmd(
     base_url,
     agency_name,
     dry_run,
+    max_downloads,
     verbose,
 ):
     """
@@ -229,6 +237,7 @@ def scrape_cmd(
     click.echo(f"キーワード  : {', '.join(keywords) if keywords else '(なし — 全件)'}")
     click.echo(f"期間        : {date_from or '(無制限)'} 〜 {date_to or '(無制限)'}")
     click.echo(f"出力先      : {output_dir}")
+    click.echo(f"最大件数    : {max_downloads if max_downloads > 0 else '(無制限)'}")
     click.echo(f"ドライラン  : {'はい' if dry_run else 'いいえ'}\n")
 
     # Build scraper
@@ -278,6 +287,8 @@ def scrape_cmd(
         for pr in paired
         for doc in (pr.shiyousho + pr.teian)
     ]
+    if max_downloads > 0:
+        all_docs = all_docs[:max_downloads]
 
     click.echo(f"{len(all_docs)} 件の PDF をダウンロードします...\n")
     with tqdm(total=len(all_docs), unit="file", desc="ダウンロード") as pbar:
