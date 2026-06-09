@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-06-09T08:20:53.273706Z",
+  "query": {
+    "source": "generic",
+    "keywords": [
+      "DX"
+    ],
+    "date_from": "",
+    "date_to": ""
+  },
+  "summary": {
+    "total_records": 1,
+    "complete_pairs": 0,
+    "shiyousho_only": 1,
+    "total_shiyousho_docs": 4,
+    "total_teian_docs": 0
+  },
+  "records": [
+    {
+      "id": "cef22aa0b4ea",
+      "title": "特定調達契約に係る公告",
+      "agency": "静岡市",
+      "date": "2026-06-05",
+      "url": "https://www.city.shizuoka.lg.jp/s9342/s003617.html",
+      "is_complete_pair": false,
+      "shiyousho": [
+        {
+          "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka01.pdf",
+          "text": "令和8年度総政D賃第1号市政総合ネットワーク静岡地区通信機器等賃借業務一式（PDF：469KB）",
+          "doc_type": "仕様書",
+          "filename": "20260408dxsuisinka01.pdf",
+          "context_text": "令和8年度総政D賃第1号市政総合ネットワーク静岡地区通信機器等賃借業務一式（PDF：469KB）"
+        },
+        {
+          "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka02.pdf",
+          "text": "令和8年度総政D賃第2号市政総合ネットワーク清水地区通信機器等賃借業務一式（PDF：471KB）",
+          "doc_type": "仕様書",
+          "filename": "20260408dxsuisinka02.pdf",
+          "context_text": "令和8年度総政D賃第2号市政総合ネットワーク清水地区通信機器等賃借業務一式（PDF：471KB）"
+        },
+        {
+          "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka05.pdf",
+          "text": "令和8年度総政D賃第5号インターネット接続系ネットワーク通信機器等賃借業務一式（PDF：469KB）",
+          "doc_type": "仕様書",
+          "filename": "20260408dxsuisinka05.pdf",
+          "context_text": "令和8年度総政D賃第5号インターネット接続系ネットワーク通信機器等賃借業務一式（PDF：469KB）"
+        },
+        {
+          "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka04.pdf",
+          "text": "令和8年度総政D賃第4号税務・国保年金等システム機器等賃借業務一式（PDF：468KB）",
+          "doc_type": "仕様書",
+          "filename": "20260408dxsuisinka04.pdf",
+          "context_text": "令和8年度総政D賃第4号税務・国保年金等システム機器等賃借業務一式（PDF：468KB）"
+        }
+      ],
+      "teian": []
+    }
+  ],
+  "downloads": [
+    {
+      "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka01.pdf",
+      "local_path": "./downloads/generic/cef22aa0b4ea/仕様書_20260408dxsuisinka01.pdf",
+      "size": 479622,
+      "downloaded_at": "2026-06-09T08:20:48.379208+00:00",
+      "success": true,
+      "error": null,
+      "record_id": "cef22aa0b4ea",
+      "record_title": "特定調達契約に係る公告",
+      "doc_type": "仕様書"
+    },
+    {
+      "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka02.pdf",
+      "local_path": "./downloads/generic/cef22aa0b4ea/仕様書_20260408dxsuisinka02.pdf",
+      "size": 482006,
+      "downloaded_at": "2026-06-09T08:20:50.008228+00:00",
+      "success": true,
+      "error": null,
+      "record_id": "cef22aa0b4ea",
+      "record_title": "特定調達契約に係る公告",
+      "doc_type": "仕様書"
+    },
+    {
+      "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka05.pdf",
+      "local_path": "./downloads/generic/cef22aa0b4ea/仕様書_20260408dxsuisinka05.pdf",
+      "size": 479281,
+      "downloaded_at": "2026-06-09T08:20:51.636434+00:00",
+      "success": true,
+      "error": null,
+      "record_id": "cef22aa0b4ea",
+      "record_title": "特定調達契約に係る公告",
+      "doc_type": "仕様書"
+    },
+    {
+      "url": "https://www.city.shizuoka.lg.jp/documents/3592/20260408dxsuisinka04.pdf",
+      "local_path": "./downloads/generic/cef22aa0b4ea/仕様書_20260408dxsuisinka04.pdf",
+      "size": 478268,
+      "downloaded_at": "2026-06-09T08:20:53.273260+00:00",
+      "success": true,
+      "error": null,
+      "record_id": "cef22aa0b4ea",
+      "record_title": "特定調達契約に係る公告",
+      "doc_type": "仕様書"
+    }
+  ]
+}
