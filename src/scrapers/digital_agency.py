@@ -89,6 +89,9 @@ class DigitalAgencyScraper(BaseScraper):
                 record = self._parse_procurement_page(url)
                 if record is None:
                     continue
+                self._filter_documents_by_keywords(record, keywords)
+                if not record.documents:
+                    continue
                 if not self._record_matches_keywords(record, keywords):
                     continue
                 if not self._record_in_date_range(record, date_from, date_to):

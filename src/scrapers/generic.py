@@ -121,13 +121,17 @@ class GenericScraper(BaseScraper):
                 record = self._parse_detail_page(url)
                 if record is None:
                     continue
+                # Filter individual documents to those matching keywords before
+                # record-level check so unrelated PDFs on mixed listing pages
+                # are not downloaded.
+                self._filter_documents_by_keywords(record, keywords)
+                if not record.documents:
+                    continue
                 if not self._record_matches_keywords(record, keywords):
                     continue
                 if not self._record_in_date_range(record, date_from, date_to):
                     continue
-                # Only keep records that have at least one relevant PDF
-                if record.documents:
-                    records.append(record)
+                records.append(record)
             except Exception as exc:
                 logger.warning("[%s] Failed to parse %s: %s", self.agency_name, url, exc)
 

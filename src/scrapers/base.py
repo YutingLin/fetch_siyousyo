@@ -161,19 +161,39 @@ class BaseScraper(ABC):
     # ------------------------------------------------------------------
 
     @staticmethod
+    def _doc_matches_keywords(doc, keywords: List[str]) -> bool:
+        haystack = " ".join([doc.text, doc.url, doc.filename]).lower()
+        return any(kw.lower() in haystack for kw in keywords)
+
+    @staticmethod
+    def _filter_documents_by_keywords(record: ProcurementRecord, keywords: List[str]) -> None:
+        """Remove documents that don't match any keyword, unless the page title itself matches.
+
+        When the page title matches (dedicated procurement page), all classified
+        documents are in scope. When only a document filename matched, restrict to
+        only those documents so unrelated PDFs from the same listing page are skipped.
+        """
+        if not keywords:
+            return
+        title_haystack = (record.title + " " + record.url).lower()
+        if any(kw.lower() in title_haystack for kw in keywords):
+            return  # dedicated page — keep all docs
+        record.documents = [
+            d for d in record.documents
+            if any(kw.lower() in (d.text + " " + d.url + " " + d.filename).lower()
+                   for kw in keywords)
+        ]
+
+    @staticmethod
     def _record_matches_keywords(record: ProcurementRecord, keywords: List[str]) -> bool:
         """Return True if any keyword appears in the record title, URL, or any document."""
         if not keywords:
             return True
-        # Build searchable text: title + page URL + all document filenames/link text
         texts = [record.title, record.url]
         for doc in record.documents:
             texts.extend([doc.text, doc.url, doc.filename])
         haystack = " ".join(texts).lower()
-        for kw in keywords:
-            if kw.lower() in haystack:
-                return True
-        return False
+        return any(kw.lower() in haystack for kw in keywords)
 
     @staticmethod
     def _record_in_date_range(record: ProcurementRecord, date_from: str, date_to: str) -> bool:
