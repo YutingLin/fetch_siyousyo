@@ -233,6 +233,10 @@ def scrape_cmd(
     if verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
+    if base_url and source == "digital_agency":
+        click.echo("注意: --base-url が指定されたため --source を generic に切り替えます。")
+        source = "generic"
+
     click.echo(f"ソース      : {source}")
     click.echo(f"キーワード  : {', '.join(keywords) if keywords else '(なし — 全件)'}")
     click.echo(f"期間        : {date_from or '(無制限)'} 〜 {date_to or '(無制限)'}")
